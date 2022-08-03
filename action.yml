@@ -8,12 +8,12 @@ branding:
   color: 'purple'
 
 inputs:
-  bearer_token:
+  access_token:
     description: Nextflow Tower access token
     required: true
   compute_env:
     description: Nextflow Tower compute env
-    required: true
+    required: false
   workspace_id:
     description: Nextflow Tower workspace ID
     required: false
@@ -23,7 +23,7 @@ inputs:
     default: https://api.tower.nf
   pipeline:
     description: Pipeline repository
-    default: ${{ github.repository }}
+    default: https://github.com/${{ github.repository }}
     required: false
   revision:
     description: Pipeline revision (release / branch)
@@ -35,11 +35,15 @@ inputs:
   parameters:
     description: Pipeline parameters
     required: false
-    default: '{}'
   profiles:
     description: Nextflow config profiles
     required: false
-    default: '[]'
+  nextflow_config:
+    description: Nextflow config options
+    required: false
+  pre_run_script:
+    description: Pre-run script before launch
+    required: false
   insecure:
     description: Explicitly allow to connect to a non-SSL secured Tower server (this is no recommended)
     required: false
@@ -51,11 +55,13 @@ runs:
   env:
     TOWER_WORKSPACE_ID: ${{ inputs.workspace_id }}
     TOWER_API_ENDPOINT: ${{ inputs.api_endpoint }}
-    TOWER_ACCESS_TOKEN: ${{ inputs.bearer_token }}
+    TOWER_ACCESS_TOKEN: ${{ inputs.access_token }}
     TOWER_COMPUTE_ENV: ${{ inputs.compute_env }}
     PIPELINE: ${{ inputs.pipeline }}
     REVISION: ${{ inputs.revision }}
     WORKDIR: ${{ inputs.workdir }}
     PARAMETERS: ${{ toJson(fromJson(inputs.parameters)) }}
     CONFIG_PROFILES: ${{ inputs.profiles }}
-    INSECURE: ${{inputs.insecure}}
+    NEXTFLOW_CONFIG: ${{ inputs.nextflow_config }}
+    PRE_RUN_SCRIPT: ${{ inputs.pre_run_script }}
+    INSECURE: ${{ inputs.insecure }}
