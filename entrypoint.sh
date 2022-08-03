@@ -21,9 +21,9 @@ fi
 
 # Launch the pipeline
 tw \
+    ${INSECURE_FLAG} \
     launch \
     $PIPELINE \
-    ${INSECURE_FLAG} \
     --params-file=params.json \
     ${WORKDIR:+"--work-dir=$WORKDIR"} \
     ${TOWER_COMPUTE_ENV:+"--compute-env=$TOWER_COMPUTE_ENV"} \
