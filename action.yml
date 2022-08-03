@@ -40,6 +40,10 @@ inputs:
     description: Nextflow config profiles
     required: false
     default: '[]'
+  insecure:
+    description: Explicitly allow to connect to a non-SSL secured Tower server (this is no recommended)
+    required: false
+    default: 'false'
 
 runs:
   using: 'docker'
@@ -54,3 +58,4 @@ runs:
     WORKDIR: ${{ inputs.workdir }}
     PARAMETERS: ${{ toJson(fromJson(inputs.parameters)) }}
     CONFIG_PROFILES: ${{ inputs.profiles }}
+    INSECURE: ${{inputs.insecure}}
